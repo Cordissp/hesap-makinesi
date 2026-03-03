@@ -35,7 +35,7 @@
             border: 1px solid #2d3a4e;
         }
 
-        /* Başlık - sade ve profesyonel */
+        
         .brand {
             padding: 0 5px 20px 5px;
             color: #94a3b8;
@@ -66,7 +66,7 @@
             font-size: 0.9rem;
         }
 
-        /* Ekran - daha güçlü ve belirgin */
+        
         .display {
             background: #0b111e;
             border-radius: 24px;
@@ -98,7 +98,7 @@
             font-size: 2.5rem;
         }
 
-        /* Buton grid - güçlü ve modern */
+       
         .buttons {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -131,7 +131,7 @@
                 0 6px 15px rgba(0, 0, 0, 0.6);
         }
 
-        /* Sayı butonları - koyu ve şık */
+       
         .number {
             background: #1e2b3c;
             color: #e2e8f0;
@@ -143,7 +143,7 @@
             background: #253649;
         }
 
-        /* Operatör butonları - turuncu/mor ton güçlü */
+    
         .operator {
             background: #a78bfa;
             color: #0b0f17;
@@ -163,7 +163,7 @@
                 0 6px 15px rgba(0, 0, 0, 0.6);
         }
 
-        /* Eşittir butonu - yeşil enerji */
+        
         .equals {
             background: #10b981;
             color: #020617;
@@ -184,7 +184,7 @@
                 0 6px 15px black;
         }
 
-        /* Temizle butonu - kırmızı güç */
+    
         .clear {
             background: #dc2626;
             color: #fff1f1;
@@ -204,7 +204,7 @@
                 0 6px 15px black;
         }
 
-        /* Özel butonlar (silme, yüzde) - metalik gri */
+        
         .special {
             background: #334155;
             color: #f1f5f9;
@@ -217,13 +217,13 @@
             background: #3f4e62;
         }
 
-        /* Sıfır butonu 2 kolon */
+     
         .zero {
             grid-column: span 2;
             padding: 22px 20px;
         }
 
-        /* Alt bilgi - sade */
+       
         .footer {
             margin-top: 25px;
             padding-top: 20px;
@@ -240,7 +240,7 @@
             font-weight: 600;
         }
 
-        /* Responsive düzen */
+        
         @media (max-width: 450px) {
             .calculator { padding: 20px; }
             button { padding: 18px 6px; font-size: 1.7rem; }
@@ -301,16 +301,16 @@
 
     <script>
         (function() {
-            // Ekran elementi
+            
             const display = document.getElementById('display');
             
-            // Değişkenler
+            
             let currentValue = '0';
             let previousValue = '';
             let operator = null;
             let shouldResetScreen = false;
 
-            // Ekranı güncelle
+            
             function updateScreen(value) {
                 if (value.toString().length > 12) {
                     display.value = parseFloat(value).toExponential(6);
@@ -319,7 +319,7 @@
                 }
             }
 
-            // Sıfırlama
+            
             function resetAll() {
                 currentValue = '0';
                 previousValue = '';
@@ -328,7 +328,7 @@
                 updateScreen('0');
             }
 
-            // Sayı girişi
+        
             function inputNumber(num) {
                 if (shouldResetScreen) {
                     currentValue = num === '.' ? '0.' : num;
@@ -354,7 +354,7 @@
                 updateScreen(currentValue);
             }
 
-            // Operatör işlemi
+            
             function handleOperator(op) {
                 if (op === '%') {
                     if (currentValue && !isNaN(currentValue)) {
@@ -376,7 +376,7 @@
                 shouldResetScreen = true;
             }
 
-            // Hesaplama
+            
             function calculate() {
                 if (!operator || previousValue === '' || shouldResetScreen) return;
 
@@ -420,7 +420,7 @@
                 shouldResetScreen = true;
             }
 
-            // Silme
+            
             function backspace() {
                 if (shouldResetScreen) return;
                 
@@ -432,7 +432,7 @@
                 updateScreen(currentValue);
             }
 
-            // Klavye desteği
+            
             function handleKeyboard(e) {
                 const key = e.key;
                 
@@ -466,7 +466,7 @@
                 }
             }
 
-            // Buton event listener'ları
+            
             document.getElementById('num0').addEventListener('click', () => inputNumber('0'));
             document.getElementById('num1').addEventListener('click', () => inputNumber('1'));
             document.getElementById('num2').addEventListener('click', () => inputNumber('2'));
@@ -489,12 +489,13 @@
             document.getElementById('backspace').addEventListener('click', backspace);
             document.getElementById('clearAll').addEventListener('click', resetAll);
 
-            // Klavye dinleyicisi
+            
             window.addEventListener('keydown', handleKeyboard);
 
-            // Başlangıç
+            
             updateScreen('0');
         })();
     </script>
 </body>
+
 </html>
