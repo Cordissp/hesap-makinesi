@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Güçlü Hesap Makinesi</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #1e293b 0%, #0f172a 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            margin: 0;
+        }
+
+        .calculator {
+            background: #111827;
+            border-radius: 40px;
+            padding: 30px 25px;
+            width: 100%;
+            max-width: 420px;
+            box-shadow: 
+                0 25px 50px -12px rgba(0, 0, 0, 0.8),
+                inset 0 -2px 4px rgba(255, 255, 255, 0.05),
+                inset 0 2px 4px rgba(255, 255, 255, 0.03);
+            border: 1px solid #2d3a4e;
+        }
+
+        /* Başlık - sade ve profesyonel */
+        .brand {
+            padding: 0 5px 20px 5px;
+            color: #94a3b8;
+            font-weight: 500;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #253141;
+            margin-bottom: 25px;
+        }
+
+        .brand span:first-child {
+            background: #1e2a3a;
+            padding: 6px 16px;
+            border-radius: 40px;
+            color: #a5b4fc;
+            font-weight: 600;
+            font-size: 0.85rem;
+            border: 1px solid #334155;
+            box-shadow: inset 0 1px 3px #00000050;
+        }
+
+        .brand span:last-child {
+            color: #6b7b93;
+            font-size: 0.9rem;
+        }
+
+        /* Ekran - daha güçlü ve belirgin */
+        .display {
+            background: #0b111e;
+            border-radius: 24px;
+            margin-bottom: 25px;
+            padding: 20px 25px;
+            border: 2px solid #253141;
+            box-shadow: 
+                inset 0 8px 12px rgba(0, 0, 0, 0.6),
+                0 2px 4px rgba(255, 255, 255, 0.02);
+        }
+
+        .display input {
+            background: transparent;
+            border: none;
+            width: 100%;
+            color: #f1f5f9;
+            font-size: 3.2rem;
+            font-weight: 600;
+            text-align: right;
+            outline: none;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.8);
+            font-family: 'Inter', monospace;
+        }
+
+        .display input::placeholder {
+            color: #334155;
+            font-weight: 400;
+            font-size: 2.5rem;
+        }
+
+        /* Buton grid - güçlü ve modern */
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 14px;
+        }
+
+        button {
+            border: none;
+            border-radius: 60px;
+            padding: 22px 8px;
+            font-size: 1.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.1s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 
+                0 8px 0 #0f1a2c,
+                0 4px 15px rgba(0, 0, 0, 0.5),
+                inset 0 -2px 4px rgba(255, 255, 255, 0.1);
+        }
+
+        button:active {
+            transform: translateY(6px);
+            box-shadow: 
+                0 2px 0 #0f1a2c,
+                0 6px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Sayı butonları - koyu ve şık */
+        .number {
+            background: #1e2b3c;
+            color: #e2e8f0;
+            text-shadow: 0 2px 3px black;
+            border-color: #334155;
+        }
+
+        .number:hover {
+            background: #253649;
+        }
+
+        /* Operatör butonları - turuncu/mor ton güçlü */
+        .operator {
+            background: #a78bfa;
+            color: #0b0f17;
+            text-shadow: 0 1px 2px #d9c9ff;
+            border-color: #c4b5fd;
+            box-shadow: 
+                0 8px 0 #5b4b8a,
+                0 4px 15px rgba(0, 0, 0, 0.5),
+                inset 0 -2px 4px #e2d5ff;
+            font-weight: 700;
+        }
+
+        .operator:active {
+            background: #b19cff;
+            box-shadow: 
+                0 2px 0 #5b4b8a,
+                0 6px 15px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Eşittir butonu - yeşil enerji */
+        .equals {
+            background: #10b981;
+            color: #020617;
+            text-shadow: 0 1px 2px #93ffcf;
+            border-color: #34d399;
+            box-shadow: 
+                0 8px 0 #047857,
+                0 4px 15px black,
+                inset 0 -2px 4px #a7f3d0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .equals:active {
+            background: #14cc8a;
+            box-shadow: 
+                0 2px 0 #047857,
+                0 6px 15px black;
+        }
+
+        /* Temizle butonu - kırmızı güç */
+        .clear {
+            background: #dc2626;
+            color: #fff1f1;
+            text-shadow: 0 2px 3px #7f1d1d;
+            border-color: #f87171;
+            box-shadow: 
+                0 8px 0 #991b1b,
+                0 4px 15px black,
+                inset 0 -2px 4px #fca5a5;
+            font-weight: 600;
+        }
+
+        .clear:active {
+            background: #e63535;
+            box-shadow: 
+                0 2px 0 #991b1b,
+                0 6px 15px black;
+        }
+
+        /* Özel butonlar (silme, yüzde) - metalik gri */
+        .special {
+            background: #334155;
+            color: #f1f5f9;
+            border-color: #475569;
+            text-shadow: 0 2px 3px black;
+            font-size: 1.8rem;
+        }
+
+        .special:hover {
+            background: #3f4e62;
+        }
+
+        /* Sıfır butonu 2 kolon */
+        .zero {
+            grid-column: span 2;
+            padding: 22px 20px;
+        }
+
+        /* Alt bilgi - sade */
+        .footer {
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 1px solid #253141;
+            text-align: center;
+            color: #4b5a6e;
+            font-size: 0.85rem;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .footer span {
+            color: #60a5fa;
+            font-weight: 600;
+        }
+
+        /* Responsive düzen */
+        @media (max-width: 450px) {
+            .calculator { padding: 20px; }
+            button { padding: 18px 6px; font-size: 1.7rem; }
+            .display input { font-size: 2.8rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <!-- Profesyonel başlık -->
+        <div class="brand">
+            <span>HESAP MAKİNESİ</span>
+            <span>v2.0</span>
+        </div>
+
+        <!-- Ekran -->
+        <div class="display">
+            <input type="text" id="display" readonly value="0" placeholder="0">
+        </div>
+
+        <!-- Butonlar -->
+        <div class="buttons">
+            <!-- 1. satır: AC, sil, yüzde, böl -->
+            <button class="clear" id="clearAll">AC</button>
+            <button class="special" id="backspace">⌫</button>
+            <button class="special" id="percent">%</button>
+            <button class="operator" id="divide">÷</button>
+
+            <!-- 2. satır: 7,8,9, çarp -->
+            <button class="number" id="num7">7</button>
+            <button class="number" id="num8">8</button>
+            <button class="number" id="num9">9</button>
+            <button class="operator" id="multiply">×</button>
+
+            <!-- 3. satır: 4,5,6, eksi -->
+            <button class="number" id="num4">4</button>
+            <button class="number" id="num5">5</button>
+            <button class="number" id="num6">6</button>
+            <button class="operator" id="subtract">−</button>
+
+            <!-- 4. satır: 1,2,3, artı -->
+            <button class="number" id="num1">1</button>
+            <button class="number" id="num2">2</button>
+            <button class="number" id="num3">3</button>
+            <button class="operator" id="add">+</button>
+
+            <!-- 5. satır: 0 (geniş), nokta, eşittir -->
+            <button class="number zero" id="num0">0</button>
+            <button class="number" id="decimal">.</button>
+            <button class="equals" id="equals">=</button>
+        </div>
+
+        <!-- Alt bilgi -->
+        <div class="footer">
+            <span>⚡</span> güçlü hesaplama · profesyonel sürüm <span>⚡</span>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // Ekran elementi
+            const display = document.getElementById('display');
+            
+            // Değişkenler
+            let currentValue = '0';
+            let previousValue = '';
+            let operator = null;
+            let shouldResetScreen = false;
+
+            // Ekranı güncelle
+            function updateScreen(value) {
+                if (value.toString().length > 12) {
+                    display.value = parseFloat(value).toExponential(6);
+                } else {
+                    display.value = value;
+                }
+            }
+
+            // Sıfırlama
+            function resetAll() {
+                currentValue = '0';
+                previousValue = '';
+                operator = null;
+                shouldResetScreen = false;
+                updateScreen('0');
+            }
+
+            // Sayı girişi
+            function inputNumber(num) {
+                if (shouldResetScreen) {
+                    currentValue = num === '.' ? '0.' : num;
+                    shouldResetScreen = false;
+                } else {
+                    if (num === '.') {
+                        if (currentValue.includes('.')) return;
+                        if (currentValue === '' || currentValue === '0') {
+                            currentValue = '0.';
+                        } else {
+                            currentValue += '.';
+                        }
+                    } else {
+                        if (currentValue === '0' && num === '0') return;
+                        if (currentValue === '0') {
+                            currentValue = num;
+                        } else {
+                            if (currentValue.replace('.', '').length >= 12) return;
+                            currentValue += num;
+                        }
+                    }
+                }
+                updateScreen(currentValue);
+            }
+
+            // Operatör işlemi
+            function handleOperator(op) {
+                if (op === '%') {
+                    if (currentValue && !isNaN(currentValue)) {
+                        currentValue = (parseFloat(currentValue) / 100).toString();
+                        updateScreen(currentValue);
+                        previousValue = '';
+                        operator = null;
+                        shouldResetScreen = true;
+                    }
+                    return;
+                }
+
+                if (operator && previousValue && !shouldResetScreen) {
+                    calculate();
+                }
+
+                operator = op;
+                previousValue = currentValue;
+                shouldResetScreen = true;
+            }
+
+            // Hesaplama
+            function calculate() {
+                if (!operator || previousValue === '' || shouldResetScreen) return;
+
+                const prev = parseFloat(previousValue);
+                const curr = parseFloat(currentValue);
+                
+                if (isNaN(prev) || isNaN(curr)) return;
+
+                let result;
+                switch (operator) {
+                    case '+':
+                        result = prev + curr;
+                        break;
+                    case '−':
+                        result = prev - curr;
+                        break;
+                    case '×':
+                        result = prev * curr;
+                        break;
+                    case '÷':
+                        if (curr === 0) {
+                            alert('Bir sayı sıfıra bölünemez!');
+                            resetAll();
+                            return;
+                        }
+                        result = prev / curr;
+                        break;
+                    default:
+                        return;
+                }
+
+                if (result.toString().length > 14) {
+                    result = parseFloat(result.toPrecision(12));
+                }
+
+                currentValue = result.toString();
+                updateScreen(currentValue);
+                
+                operator = null;
+                previousValue = '';
+                shouldResetScreen = true;
+            }
+
+            // Silme
+            function backspace() {
+                if (shouldResetScreen) return;
+                
+                if (currentValue.length > 1) {
+                    currentValue = currentValue.slice(0, -1);
+                } else {
+                    currentValue = '0';
+                }
+                updateScreen(currentValue);
+            }
+
+            // Klavye desteği
+            function handleKeyboard(e) {
+                const key = e.key;
+                
+                if (/^[0-9]$/.test(key)) {
+                    e.preventDefault();
+                    inputNumber(key);
+                } else if (key === '.') {
+                    e.preventDefault();
+                    inputNumber('.');
+                } else if (key === '+' || key === '-') {
+                    e.preventDefault();
+                    handleOperator(key === '+' ? '+' : '−');
+                } else if (key === '*') {
+                    e.preventDefault();
+                    handleOperator('×');
+                } else if (key === '/') {
+                    e.preventDefault();
+                    handleOperator('÷');
+                } else if (key === '=' || key === 'Enter') {
+                    e.preventDefault();
+                    calculate();
+                } else if (key === 'Escape') {
+                    e.preventDefault();
+                    resetAll();
+                } else if (key === 'Backspace') {
+                    e.preventDefault();
+                    backspace();
+                } else if (key === '%') {
+                    e.preventDefault();
+                    handleOperator('%');
+                }
+            }
+
+            // Buton event listener'ları
+            document.getElementById('num0').addEventListener('click', () => inputNumber('0'));
+            document.getElementById('num1').addEventListener('click', () => inputNumber('1'));
+            document.getElementById('num2').addEventListener('click', () => inputNumber('2'));
+            document.getElementById('num3').addEventListener('click', () => inputNumber('3'));
+            document.getElementById('num4').addEventListener('click', () => inputNumber('4'));
+            document.getElementById('num5').addEventListener('click', () => inputNumber('5'));
+            document.getElementById('num6').addEventListener('click', () => inputNumber('6'));
+            document.getElementById('num7').addEventListener('click', () => inputNumber('7'));
+            document.getElementById('num8').addEventListener('click', () => inputNumber('8'));
+            document.getElementById('num9').addEventListener('click', () => inputNumber('9'));
+            document.getElementById('decimal').addEventListener('click', () => inputNumber('.'));
+
+            document.getElementById('add').addEventListener('click', () => handleOperator('+'));
+            document.getElementById('subtract').addEventListener('click', () => handleOperator('−'));
+            document.getElementById('multiply').addEventListener('click', () => handleOperator('×'));
+            document.getElementById('divide').addEventListener('click', () => handleOperator('÷'));
+            document.getElementById('percent').addEventListener('click', () => handleOperator('%'));
+
+            document.getElementById('equals').addEventListener('click', calculate);
+            document.getElementById('backspace').addEventListener('click', backspace);
+            document.getElementById('clearAll').addEventListener('click', resetAll);
+
+            // Klavye dinleyicisi
+            window.addEventListener('keydown', handleKeyboard);
+
+            // Başlangıç
+            updateScreen('0');
+        })();
+    </script>
+</body>
+</html>
